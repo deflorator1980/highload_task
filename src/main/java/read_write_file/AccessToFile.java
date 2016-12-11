@@ -21,13 +21,13 @@ public class AccessToFile {
 
 //        byte[] bytes = ByteBuffer.allocate(4).putInt(1695609641).array();
 
-        byte[] bytes = ByteBuffer.allocate(4).putInt(16).array();
+//        byte[] bytes = ByteBuffer.allocate(8).putLong(16546456).array();
         write.seek(0);
-        write.write(bytes);
-
-        bytes = ByteBuffer.allocate(4).putInt(32).array();
-        write.seek(4);
-        write.write(bytes);
+//        write.write(bytes);
+        write.writeLong(-2324L);
+//        bytes = ByteBuffer.allocate(4).putInt(32).array();
+//        write.seek(4);
+//        write.write(bytes);
 
         read.seek(0);
         System.out.println(read.readInt());
