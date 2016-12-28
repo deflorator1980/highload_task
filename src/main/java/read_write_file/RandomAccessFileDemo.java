@@ -19,13 +19,13 @@ public class RandomAccessFileDemo {
             raf.writeLong(-34324l);
 
             // set the file pointer at 0 position
-            raf.seek(0);
+//            raf.seek(0);
 
             // read long
-            System.out.println("" + raf.readLong());
+//            System.out.println("" + raf.readLong());
 
             // set the file pointer at 0 position
-            raf.seek(0);
+//            raf.seek(0);
 
             // write a long at the start
             raf.writeLong(20000000000l);
@@ -34,7 +34,8 @@ public class RandomAccessFileDemo {
             raf.seek(0);
 
             // read long
-            System.out.println("" + raf.readLong());
+            System.out.println("1: " + raf.readLong());
+            System.out.println("2: " + raf.readLong());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
