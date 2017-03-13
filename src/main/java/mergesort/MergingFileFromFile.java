@@ -42,48 +42,32 @@ public class MergingFileFromFile {
 
         int i = 0, j = 0;
         for (int k = 0; k < size; k++) {
-
-//            if (i > a1.length - 1) {
             if (i > ((a1.length - 1) * 4)) {
-//                int a = a2[j];
                 raf2.seek(j);
                 int a = raf2.readInt();
                 rafRez.writeInt(a);
                 j += 4;
-//                j++;
             } else {
-//                if (j > a2.length - 1) {
                 if (j > ((a2.length - 1) * 4)) {
-//                    int a = a1[i];
                     raf1.seek(i);
                     int a = raf1.readInt();
                     rafRez.writeInt(a);
                     i += 4;
-//                    i++;
                 } else {
                     raf1.seek(i);
                     raf2.seek(j);
-//                    if (a1[i] < a2[j]) {
-                    if (raf1.readInt() < raf2.readInt()) {
-//                int a = a1[i];
-                        raf1.seek(i);
-                        int a = raf1.readInt();
+                    int a = raf1.readInt();
+                    int b = raf2.readInt();
+                    if (a < b) {
                         rafRez.writeInt(a);
                         i += 4;
-//                i++;
-
                     } else {
-//                        int b = a2[j];
-                        raf2.seek(j);
-                        int b = raf2.readInt();
                         rafRez.writeInt(b);
                         j += 4;
-//                        j++;
                     }
                 }
             }
         }
-
 
         rafRez.seek(0);
         for (int k = 0; k < size; k++) {
