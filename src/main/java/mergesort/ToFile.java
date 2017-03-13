@@ -71,8 +71,11 @@ public class ToFile {
     public void sortParts(String file, int memorySize) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         int x;
-        boolean eof = false;
         raf.seek(0);
+        boolean eof = false;
+        /**
+         * todo дописать whie memorySize = false
+         */
         List<Integer> values = new ArrayList<>();
         for (int i = 0; i < memorySize; i++) {
             try {
@@ -87,6 +90,13 @@ public class ToFile {
             }
         }
         Collections.sort(values);
+        writeSorted(raf, values);
         System.out.println(values);
+    }
+
+    public void writeSorted(RandomAccessFile raf, List<Integer> values) throws IOException {
+        for (int value : values) {
+            raf.writeInt(value);
+        }
     }
 }
