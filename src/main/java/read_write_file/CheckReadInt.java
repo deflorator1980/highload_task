@@ -14,7 +14,7 @@ public class CheckReadInt {
         int[] a2 = new int[]{10, 11, 41, 50, 65, 86, 98, 101, 190, 1100, 1200, 3000, 5000};
 
         RandomAccessFile raf = new RandomAccessFile("storage2", "rw");
-        raf.seek(3);
+        raf.seek(4);
 //        for (int i = 0; i < 4; i++) {
 //            raf.writeInt(i);
 //        }
