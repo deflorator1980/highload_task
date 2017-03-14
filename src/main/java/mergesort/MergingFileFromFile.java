@@ -1,5 +1,6 @@
 package mergesort;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.*;
@@ -7,9 +8,9 @@ import java.util.stream.Collectors;
 
 public class MergingFileFromFile {
     public static void main(String[] args) throws IOException {
-        int k = 1;
+        int k = 4;
         int[] a1 = new int[]{21, 23, 24, 40, 75, 76, 78, 77, 900, 2100, 2200, 2300, 2400, 2500};
-//        int[] a2 = new int[]{10, 11, 41, 50, 65, 86, 98, 101, 190, 1100, 1200, 3000, 5000};
+//        int[] a2 = new int[]{10, 11, 41, 50, 65, 86, 98, 101, 190, 1100, 1200};
         int[] a2 = new int[]{30, 31, 41, 50, 65, 86, 98, 101, 190, 1100, 1200, 3000, 5000};
 
         List<Integer> l1 = Arrays.stream(a1).boxed().collect(Collectors.toList());
@@ -32,18 +33,27 @@ public class MergingFileFromFile {
         }
 
         System.out.print("storageBase befor: ");
-        raf.seek(0);
-        for (int i = 0; i < size; i++) {
-            System.out.print(raf.readInt() + ", ");
-        }
+        printFile(raf);
 
         ToFile tf = new ToFile();
         tf.sortParts("storageBase", 10);
 
-        System.out.print("\nstorageBase after: ");
+        System.out.print("storageBase after: ");
+        printFile(raf);
+    }
+
+    public static void printFile(RandomAccessFile raf) throws IOException {
+        int counter = 0;
         raf.seek(0);
-        for (int i = 0; i < size; i++) {
-            System.out.print(raf.readInt() + ", ");
-        }
+        boolean eof = false;
+        do {
+            try {
+                counter++;
+                System.out.print(raf.readInt() + ", ");
+            } catch (EOFException e) {
+                eof = true;
+            }
+        } while (!eof);
+        System.out.println(" итого: " + counter);
     }
 }
