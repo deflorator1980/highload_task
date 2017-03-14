@@ -17,8 +17,8 @@ public class MergingFileFromFile {
         Collections.shuffle(l1);
         Collections.shuffle(l2);
         int size = (l1.size() + l2.size()) * k;
-        System.out.println(l1);
-        System.out.println(l2);
+        System.out.println("l1: " + l1);
+        System.out.println("l2: " + l2);
 
         RandomAccessFile raf = new RandomAccessFile("storageBase", "rw");
         raf.seek(0);
@@ -31,17 +31,19 @@ public class MergingFileFromFile {
             }
         }
 
+        System.out.print("storageBase befor: ");
         raf.seek(0);
         for (int i = 0; i < size; i++) {
             System.out.print(raf.readInt() + ", ");
         }
 
-        System.out.println();
         ToFile tf = new ToFile();
         tf.sortParts("storageBase", 10);
 
-
-//        ToFile toFile = new ToFile();
-//        toFile.writeToFile(a1, a2);
+        System.out.print("\nstorageBase after: ");
+        raf.seek(0);
+        for (int i = 0; i < size; i++) {
+            System.out.print(raf.readInt() + ", ");
+        }
     }
 }
