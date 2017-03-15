@@ -70,9 +70,7 @@ public class ToFile {
         int i;
         raf.seek(0);
         boolean eof = false;
-        /**
-         * todo дописать while eof = false
-         */
+
         do {
             List<Integer> values = new ArrayList<>();
             for (i = 0; i < memorySize; i++) {
