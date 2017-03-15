@@ -7,46 +7,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Created by isakow on 13.03.2017.
  */
 public class ToFile {
-//    public void writeToFile(int[] a1, int[] a2) throws IOException {
-    public void writeToFile() throws IOException {
-        int size = 10;
-//        int size = a1.length + a2.length;
-//        RandomAccessFile raf1 = new RandomAccessFile("a1", "rw");
-//        RandomAccessFile raf2 = new RandomAccessFile("a2", "rw");
-
-//        System.out.print("a1: ");
-//        raf1.seek(0);
-//        for (int anA1 : a1) {
-//            System.out.print(raf1.readInt() + " ");
-//        }
-//
-//        System.out.print("\na2: ");
-//        raf2.seek(0);
-//        for (int anA2 : a2) {
-//            System.out.print(raf2.readInt() + " ");
-//        }
-//        System.out.println();
+    public int writeSortedParts(int size) throws IOException {
 
         RandomAccessFile raf1 = new RandomAccessFile("storageBase", "rw");
         RandomAccessFile raf2 = new RandomAccessFile("storageBase", "rw");
 
         RandomAccessFile rafRez = new RandomAccessFile("storageRez", "rw");
-
         int i = 0, j = size * 4;
         for (int k = 0; k < size * 2; k++) {
-//            if (i > ((a1.length - 1) * 4)) {
             if (i > ((size - 1) * 4)) {
                 raf2.seek(j);
-                int a = raf2.readInt();
+                int a;
+                try {
+                    a = raf2.readInt();
+                } catch (EOFException e) {
+                    break;
+                }
                 rafRez.writeInt(a);
                 j += 4;
             } else {
-//                if (j > ((a2.length - 1) * 4)) {
                 if (j > ((size - 1) * 4) + (size * 4)) {
                     raf1.seek(i);
                     int a = raf1.readInt();
@@ -56,7 +41,12 @@ public class ToFile {
                     raf1.seek(i);
                     raf2.seek(j);
                     int a = raf1.readInt();
-                    int b = raf2.readInt();
+                    int b;
+                    try {
+                        b = raf2.readInt();
+                    } catch (EOFException e) {
+                        b = Integer.MAX_VALUE;
+                    }
                     if (a < b) {
                         rafRez.writeInt(a);
                         i += 4;
@@ -69,7 +59,9 @@ public class ToFile {
         }
 
         System.out.print("storageRez       : ");
-        MergingFileFromFile.printFile(rafRez);
+        int counter = MergingFileFromFile.printFile(rafRez);
+        writeFromTo(rafRez, new RandomAccessFile("storageBase", "rw"), counter);
+        return counter;
     }
 
     public void sortParts(String file, int memorySize) throws IOException {
@@ -101,6 +93,14 @@ public class ToFile {
     public void writeSorted(RandomAccessFile raf, List<Integer> values) throws IOException {
         for (int value : values) {
             raf.writeInt(value);
+        }
+    }
+
+    public void writeFromTo(RandomAccessFile rafFrom, RandomAccessFile rafTo, int counter) throws IOException {
+        rafFrom.seek(0);
+        rafTo.seek(0);
+        for (int i = 0; i < counter; i++) {
+            rafTo.writeInt(rafFrom.readInt());
         }
     }
 }

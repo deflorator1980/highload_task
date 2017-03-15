@@ -41,10 +41,18 @@ public class MergingFileFromFile {
         System.out.print("storageBase after: ");
         printFile(raf);
 
-        tf.writeToFile();
+        size = tf.writeSortedParts(10);
+
+        System.out.print("storageBase  sort: ");
+        printFile(raf);
+
+        tf.writeSortedParts(size);
+        /**
+         * todo записать из storageRez в storageBase
+         */
     }
 
-    public static void printFile(RandomAccessFile raf) throws IOException {
+    public static int printFile(RandomAccessFile raf) throws IOException {
         int counter = 0;
         raf.seek(0);
         boolean eof = false;
@@ -57,5 +65,6 @@ public class MergingFileFromFile {
             }
         } while (!eof);
         System.out.println(" итого: " + counter);
+        return counter;
     }
 }
