@@ -20,7 +20,7 @@ public class ToFile {
 
         RandomAccessFile rafRez = new RandomAccessFile("storageRez", "rw");
         int i = 0, j = size * 4;
-        for (int k = 0; k < size * 2; k++) {
+        for (int k = 0; k < size + 10; k++) {
             if (i > ((size - 1) * 4)) {
                 raf2.seek(j);
                 int a;
@@ -32,7 +32,8 @@ public class ToFile {
                 rafRez.writeInt(a);
                 j += 4;
             } else {
-                if (j > ((size - 1) * 4) + (size * 4)) {
+//                if (j > ((size - 1) * 4) + (size * 4)) {
+                if (j > ((10 - 1) * 4) + (size * 4)) {
                     raf1.seek(i);
                     int a = raf1.readInt();
                     rafRez.writeInt(a);
