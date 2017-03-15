@@ -4,10 +4,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Created by isakow on 13.03.2017.
@@ -32,7 +30,6 @@ public class ToFile {
                 rafRez.writeInt(a);
                 j += 4;
             } else {
-//                if (j > ((size - 1) * 4) + (size * 4)) {
                 if (j > ((10 - 1) * 4) + (size * 4)) {
                     raf1.seek(i);
                     int a = raf1.readInt();
