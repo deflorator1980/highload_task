@@ -7,8 +7,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MergingFileFromFile {
+    public static final int MEMORY_SIZE = 10;
     public static void main(String[] args) throws IOException {
-        int k = 2;
+        int k = 5;
         int[] a1 = new int[]{21, 23, 24, 40, 75, 76, 78, 77, 900, 2100, 2200, 2300, 2400, 2500};
 //        int[] a2 = new int[]{10, 11, 41, 50, 65, 86, 98, 101, 190, 1100, 1200};
         int[] a2 = new int[]{30, 31, 41, 50, 65, 86, 98, 101, 190, 1100, 1200, 3000, 5000};
@@ -18,7 +19,7 @@ public class MergingFileFromFile {
         Collections.shuffle(l1);
         Collections.shuffle(l2);
         int dataSize = (l1.size() + l2.size()) * k;
-        int size = 10;
+        int size = MEMORY_SIZE;
         int counter = 0;
         System.out.println("l1: " + l1);
         System.out.println("l2: " + l2);
@@ -38,7 +39,7 @@ public class MergingFileFromFile {
         printFile(raf);
 
         ToFile tf = new ToFile();
-        tf.sortParts("storageBase", 10);
+        tf.sortParts("storageBase", MEMORY_SIZE);
 
         System.out.print("storageBase after: ");
         printFile(raf);
@@ -49,11 +50,11 @@ public class MergingFileFromFile {
         printFile(raf);
 
         do {
-            size += 10;
+            size += MEMORY_SIZE;
             System.out.print("storageBase sort2: ");
             tf.writeSortedParts(size );
 
-        }while (size < dataSize - 10 );
+        }while (size < dataSize - MEMORY_SIZE );
 
 
     }

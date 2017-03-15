@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static mergesort.MergingFileFromFile.MEMORY_SIZE;
+
 /**
  * Created by isakow on 13.03.2017.
  */
@@ -18,7 +20,7 @@ public class ToFile {
 
         RandomAccessFile rafRez = new RandomAccessFile("storageRez", "rw");
         int i = 0, j = size * 4;
-        for (int k = 0; k < size + 10; k++) {
+        for (int k = 0; k < size + MEMORY_SIZE; k++) {
             if (i > ((size - 1) * 4)) {
                 raf2.seek(j);
                 int a;
@@ -30,7 +32,7 @@ public class ToFile {
                 rafRez.writeInt(a);
                 j += 4;
             } else {
-                if (j > ((10 - 1) * 4) + (size * 4)) {
+                if (j >= (MEMORY_SIZE * 4) + (size * 4)) {
                     raf1.seek(i);
                     int a = raf1.readInt();
                     rafRez.writeInt(a);
